@@ -23,37 +23,17 @@ mongoose
     console.log('DB connection established');
   });
 
-// Schema
-const tourSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, 'A tour must have a name'],
-    unique: true,
-  },
-  price: {
-    type: Number,
-    required: [true, 'A tour must have a price'],
-  },
-  rating: {
-    type: Number,
-    default: 4.5,
-  },
-});
+// const testTour = new Tour({
+//   name: 'The Park Camper',
+//   price: 997,
+// });
 
-// Model
-const Tour = mongoose.model('Tour', tourSchema);
-
-const testTour = new Tour({
-  name: 'The Park Camper',
-  price: 997,
-});
-
-testTour
-  .save()
-  .then((doc) => {
-    console.log(doc);
-  })
-  .catch((err) => console.log(err));
+// testTour
+//   .save()
+//   .then((doc) => {
+//     console.log(doc);
+//   })
+//   .catch((err) => console.log(err));
 
 const app = require('./app');
 
