@@ -66,3 +66,56 @@ db.tours.deleteMany({rating: {$lte: 4.7}})
 
 // CONNECT TO REMOTE DB
 copy connections sring from cluster
+
+// CONNECT REMOTE DB to APP
+use config.env
+DATABASE=mongodb+srv://thomas:<PASSWORD>@cluster0.gc7oe.mongodb.net/natours-app?retryWrites=true&w=majority
+
+install mongodb driver: mongoose
+
+
+
+// CONNECT LOCAL DB to APP
+DATABASE_LOCAL=mongodb://localhost:27017/natours
+
+
+const mongoose = require('mongoose');
+
+const DB = process.env.DATABASE.replace(
+  '<PASSWORD>',
+  process.env.DATABASE_PASSWORD
+);
+
+mongoose
+  // .connect(process.env.DATABASE_LOCAL, {
+  .connect(DB, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    // console.log(con.connections);
+    console.log('DB connection established');
+  });
+
+
+// Schema
+const tourSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, 'A tour must have a name'],
+    unique: true,
+  },
+  price: {
+    type: Number,
+    required: [true, 'A tour must have a price'],
+  },
+  rating: {
+    type: Number,
+    default: 4.5,
+  },
+});
+
+// Model
+const Tour = mongoose.model('Tour', tourSchema);
