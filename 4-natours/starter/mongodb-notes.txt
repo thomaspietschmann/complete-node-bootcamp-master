@@ -1,0 +1,68 @@
+shows current database
+> db
+
+show all dbs
+> show dbs
+
+show collections
+> show collections
+
+create or switch db
+> use natours-test
+
+
+get all documents
+> db.tours.find()
+
+// CREATE
+
+insert a document
+> db.tours.insertMany({javascript_object})
+insert many documents
+> db.tours.insertMany([{}, {}])
+
+// READ
+all:
+db.tours.find 
+
+one:
+db.tours.find({name: "The Forest Hiker})
+
+price less than 500 AND rating >= 4.8:
+db.tours.find({price: {$lte:  500}})
+db.tours.find({price: {$lte:  500}, rating: {$gte: 4.8}})
+
+
+lte: less than or equal
+lt: less than
+gte, gt
+
+price less than 500 OR rating >= 4.8:
+
+db.tours.find({$or: [{price: {$lte: 500}}, {rating: {$gte: 4.8}}]})
+
+  only output name:
+    db.tours.find({$or: [{price: {$lte: 500}}, {rating: {$gte: 4.8}}]}, {name: 1})
+
+// UPDATE
+
+db.tours.updateOne({query object}, {$set: {changed object}})
+many: 
+
+db.tours.updateMany({query object}, {$set: {changed object}})
+
+db.tours.updateMany({rating: {$gte: 4.8}, price: {$gte: 500}}, {$set: {premium: true}})
+
+    // REPLACE:
+
+    replaceOne(), replaceMany()
+
+// DELETE
+db.tours.deleteMany({rating: {$lte: 4.7}})
+
+    // DELETE all
+    db.tours.deleteMany({})
+
+
+// CONNECT TO REMOTE DB
+copy connections sring from cluster
